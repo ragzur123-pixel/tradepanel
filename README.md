@@ -29,10 +29,10 @@ The Sovereign Node employs a strictly decoupled architecture to prevent exchange
 
 ```mermaid
 graph TD;
-    A[Local Sentinel ⚙️] -->|Calculates Limits & Signals| B(The Vault ☁️);
-    B -->|Pushes Real-Time State| C[Command Center 📱];
-    A -.->|Market Feed| D[(BIST / US Data)];
-    C -.->|Manual Execution| E((Broker DMA));
+    A["Local Sentinel ⚙️"] -->|"Calculates Limits & Signals"| B("The Vault ☁️");
+    B -->|"Pushes Real-Time State"| C["Command Center 📱"];
+    A -.->|"Market Feed"| D[("BIST / US Data")];
+    C -.->|"Manual Execution"| E(("Broker DMA"));
 ```
 
 - **The Local Sentinel (`worker.py`)**: A backend daemon running locally. It pulls market data, processes math filters, and pushes execution limits to the cloud.
