@@ -15,11 +15,11 @@
 
 ---
 
-## Executive Summary & Investment Thesis
+## The Engineering Architecture & Executive Summary
 
-The Sovereign Node is built on institutional principles to scale capital efficiently, avoiding the pitfalls of high-frequency retail black-box APIs that bleed capital to slippage. 
+This Sovereign Node was engineered from the ground up as a highly advanced **Decision Support System (A "Bloomberg Panel")**. Using LLMs as a coding copilot, I scaled this localized architecture to strictly balance efficiency with complete data sovereignty.
 
-It operates as a highly advanced **Decision Support System (A "Bloomberg Panel")**. It empowers human execution with institutional-grade math, dynamic regime filters, and statistical arbitrage indicators, ensuring maximum survivability during bear markets and compounded growth during bull cycles.
+It operates on institutional-grade math, dynamic regime filters, and statistical arbitrage indicators. The goal of this architecture is to demonstrate a decoupled, full-stack quantitative framework rather than simply acting as a high-frequency black-box API.
 
 ---
 
