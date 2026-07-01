@@ -1,0 +1,15 @@
+.env
+raw_videos/
+extracted_frames/
+final_memory/
+chroma_db/
+__pycache__/
+*.log
+*.db
+.streamlit/secrets.toml
+temp_supergemini/
+AiTradingBot(usefordata)/
+ui_cache.db
+Gemini ile sohbet.md
+emojis_app.txt
+past_ui.txt
