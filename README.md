@@ -33,6 +33,10 @@ The Sovereign Node employs a strictly decoupled architecture to prevent exchange
 - **Data & Databases**: PostgreSQL (Supabase)
 - **APIs & Integration**: BIST / US Market APIs
 
+### Data Persistence & Security
+- **Cloud Database Bridge**: Uses a remote Supabase PostgreSQL instance to act as a secure, decoupled bridge between the local intensive math engine and the lightweight mobile interface.
+- **Row-Level Security (RLS)**: Enforces strict data sovereignty, ensuring sensitive execution limits and algorithmic signals remain locked behind authenticated access.
+
 ```mermaid
 graph TD;
   A["Local Sentinel"] -->|"Calculates Limits & Signals"| B("The Vault");
@@ -52,28 +56,32 @@ flowchart TD
   classDef script fill:#0F172A,stroke:#10B981,stroke-width:1px,color:#F8FAFC
   classDef veto fill:#450A0A,stroke:#EF4444,stroke-width:1px,color:#FEE2E2
   classDef ext fill:#172554,stroke:#60A5FA,stroke-width:1px,color:#DBEAFE
+  classDef db fill:#3F3F46,stroke:#A1A1AA,stroke-width:1px,color:#F8FAFC
 
   subgraph "Backend Engine (Local Sentinel)"
-    W["run_worker.py"]:::core
-    DN["src/data_node.py"]:::script
-    IND["src/indicators.py"]:::script
-    RM["src/cro_risk.py"]:::script
-    DB["src/db_manager.py (Supabase)"]:::ext
+    W["run_worker.py<br>(Chronological Daemon)"]:::core
+    DN["src/data_node.py<br>(Data Aggregation & Formatting)"]:::script
+    IND["src/indicators.py<br>(SMA, ATR, ADX Math)"]:::script
+    RM["src/cro_risk.py<br>(Regime Filters & Position Sizing)"]:::script
   end
 
-  subgraph "Frontend Engine (Command Center)"
-    APP["src/app.py (Streamlit)"]:::core
-    BDMA["src/broker_dma.py"]:::ext
+  subgraph "Data & Security Layer"
+    DB[("Supabase PostgreSQL<br>(Row-Level Security)")]:::db
+  end
+
+  subgraph "Frontend Engine (Mobile Command Center)"
+    APP["src/app.py<br>(Streamlit Real-Time Dashboard)"]:::core
+    BDMA["src/broker_dma.py<br>(Manual Execution Interface)"]:::ext
   end
   
-  W -->|"Initiates Feed"| DN
-  DN -->|"Pulls BIST/US Data"| BIST[("Market API")]:::ext
-  DN -->|"Calculates Math"| IND
+  W -->|"Loops Watchlist"| DN
+  DN -->|"Fetches OHLCV"| BIST[("BIST / US Market APIs")]:::ext
+  DN -->|"Passes Raw Data"| IND
   IND -->|"Validates Quality Gates"| RM
-  RM -.->|"If Veto Triggered"| DROP["Strategic Drop"]:::veto
+  RM -.->|"If Veto Triggered (e.g. ADX < 20)"| DROP["Strategic Drop"]:::veto
   RM -->|"If Setup is Valid"| DB
   
-  DB -->|"Streams Signals via JSON"| APP
+  DB -->|"Streams Encrypted JSON Signals"| APP
   APP -->|"Human Validates Trade"| BDMA
 ```
 
@@ -132,6 +140,15 @@ Launch the Mobile Command Center:
 ```bash
 streamlit run src/app.py
 ```
+
+---
+
+## Future Roadmap
+
+This architecture serves as a baseline for a broader multi-modal tracking system. Future scaling plans include:
+- **Real-Time WebSockets**: Transitioning from REST polling to WebSocket streams for sub-second tick updates on the frontend dashboard.
+- **Frontend Migration**: Rewriting the Streamlit interface into a high-performance Next.js / React mobile-native application to eliminate rendering latency.
+- **Multi-User OAuth2**: Implementing secure authentication flows to allow multiple portfolio managers to track independent strategies simultaneously.
 
 ---
 
