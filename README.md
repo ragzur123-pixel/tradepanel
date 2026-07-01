@@ -1,5 +1,5 @@
 <div align="center">
-  
+ 
 # SOVEREIGN NODE
 ### Bi-Modal Quantitative Trading & Command Center
 
@@ -29,10 +29,10 @@ The Sovereign Node employs a strictly decoupled architecture to prevent exchange
 
 ```mermaid
 graph TD;
-    A["Local Sentinel"] -->|"Calculates Limits & Signals"| B("The Vault");
-    B -->|"Pushes Real-Time State"| C["Command Center"];
-    A -.->|"Market Feed"| D[("BIST / US Data")];
-    C -.->|"Manual Execution"| E(("Broker DMA"));
+  A["Local Sentinel"] -->|"Calculates Limits & Signals"| B("The Vault");
+  B -->|"Pushes Real-Time State"| C["Command Center"];
+  A -.->|"Market Feed"| D[("BIST / US Data")];
+  C -.->|"Manual Execution"| E(("Broker DMA"));
 ```
 
 ### Algorithmic Execution Flow (Script Interactions)
@@ -41,34 +41,34 @@ This pipeline maps exactly how the core python scripts interact to protect capit
 
 ```mermaid
 flowchart TD
-    %% Styles
-    classDef core fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC
-    classDef script fill:#0F172A,stroke:#10B981,stroke-width:1px,color:#F8FAFC
-    classDef veto fill:#450A0A,stroke:#EF4444,stroke-width:1px,color:#FEE2E2
-    classDef ext fill:#172554,stroke:#60A5FA,stroke-width:1px,color:#DBEAFE
+  %% Styles
+  classDef core fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC
+  classDef script fill:#0F172A,stroke:#10B981,stroke-width:1px,color:#F8FAFC
+  classDef veto fill:#450A0A,stroke:#EF4444,stroke-width:1px,color:#FEE2E2
+  classDef ext fill:#172554,stroke:#60A5FA,stroke-width:1px,color:#DBEAFE
 
-    subgraph "Backend Engine (Local Sentinel)"
-        W["run_worker.py"]:::core
-        DN["src/data_node.py"]:::script
-        IND["src/indicators.py"]:::script
-        RM["src/cro_risk.py"]:::script
-        DB["src/db_manager.py (Supabase)"]:::ext
-    end
+  subgraph "Backend Engine (Local Sentinel)"
+    W["run_worker.py"]:::core
+    DN["src/data_node.py"]:::script
+    IND["src/indicators.py"]:::script
+    RM["src/cro_risk.py"]:::script
+    DB["src/db_manager.py (Supabase)"]:::ext
+  end
 
-    subgraph "Frontend Engine (Command Center)"
-        APP["src/app.py (Streamlit)"]:::core
-        BDMA["src/broker_dma.py"]:::ext
-    end
-    
-    W -->|"Initiates Feed"| DN
-    DN -->|"Pulls BIST/US Data"| BIST[("Market API")]:::ext
-    DN -->|"Calculates Math"| IND
-    IND -->|"Validates Quality Gates"| RM
-    RM -.->|"If Veto Triggered"| DROP["Strategic Drop"]:::veto
-    RM -->|"If Setup is Valid"| DB
-    
-    DB -->|"Streams Signals via JSON"| APP
-    APP -->|"Human Validates Trade"| BDMA
+  subgraph "Frontend Engine (Command Center)"
+    APP["src/app.py (Streamlit)"]:::core
+    BDMA["src/broker_dma.py"]:::ext
+  end
+  
+  W -->|"Initiates Feed"| DN
+  DN -->|"Pulls BIST/US Data"| BIST[("Market API")]:::ext
+  DN -->|"Calculates Math"| IND
+  IND -->|"Validates Quality Gates"| RM
+  RM -.->|"If Veto Triggered"| DROP["Strategic Drop"]:::veto
+  RM -->|"If Setup is Valid"| DB
+  
+  DB -->|"Streams Signals via JSON"| APP
+  APP -->|"Human Validates Trade"| BDMA
 ```
 
 - **The Local Sentinel (`worker.py`)**: A backend daemon running locally. It pulls market data, processes math filters, and pushes execution limits to the cloud.
@@ -129,15 +129,15 @@ streamlit run src/app.py
 
 ---
 
-## ⚖️ Operational Rules (The Sovereign Operator)
+## Operational Rules (The Sovereign Operator)
 
-1.  **Tick Accuracy**: All limits are pre-rounded to valid exchange tick sizes. Use the "COPY PRICE" button.
-2.  **Conditional Orders**: Bypass human latency by setting Broker Conditional Orders the night before.
-3.  **KAP Check Mandatory**: Always verify the Public Disclosure Platform (KAP) before executing an intraday alert.
-4.  **No Idle Cash**: Uninvested portfolio capital must be parked in Money Market Funds (PPF).
-5.  **The Sentinel Rule**: If the Streamlit UI displays a Red "SYSTEM STALE" warning, **DO NOT TRADE**.
+1. **Tick Accuracy**: All limits are pre-rounded to valid exchange tick sizes. Use the "COPY PRICE" button.
+2. **Conditional Orders**: Bypass human latency by setting Broker Conditional Orders the night before.
+3. **KAP Check Mandatory**: Always verify the Public Disclosure Platform (KAP) before executing an intraday alert.
+4. **No Idle Cash**: Uninvested portfolio capital must be parked in Money Market Funds (PPF).
+5. **The Sentinel Rule**: If the Streamlit UI displays a Red "SYSTEM STALE" warning, **DO NOT TRADE**.
 
 <div align="center">
-  <br>
-  <i>Built with precision for Borsa Istanbul and US Markets.</i>
+ <br>
+ <i>Built with precision for Borsa Istanbul and US Markets.</i>
 </div>
