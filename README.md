@@ -35,6 +35,42 @@ graph TD;
     C -.->|"Manual Execution"| E(("Broker DMA"));
 ```
 
+### ⚙️ Algorithmic Execution Flow (Script Interactions)
+
+This pipeline maps exactly how the core python scripts interact to protect capital. The decoupling ensures the front-end dashboard remains hyper-responsive while the heavy quantitative lifting happens completely asynchronously.
+
+```mermaid
+flowchart TD
+    %% Styles
+    classDef core fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC
+    classDef script fill:#0F172A,stroke:#10B981,stroke-width:1px,color:#F8FAFC
+    classDef veto fill:#450A0A,stroke:#EF4444,stroke-width:1px,color:#FEE2E2
+    classDef ext fill:#172554,stroke:#60A5FA,stroke-width:1px,color:#DBEAFE
+
+    subgraph "Backend Engine (Local Sentinel)"
+        W["run_worker.py"]:::core
+        DN["src/data_node.py"]:::script
+        IND["src/indicators.py"]:::script
+        RM["src/cro_risk.py"]:::script
+        DB["src/db_manager.py (Supabase)"]:::ext
+    end
+
+    subgraph "Frontend Engine (Command Center)"
+        APP["src/app.py (Streamlit)"]:::core
+        BDMA["src/broker_dma.py"]:::ext
+    end
+    
+    W -->|"Initiates Feed"| DN
+    DN -->|"Pulls BIST/US Data"| BIST[("Market API")]:::ext
+    DN -->|"Calculates Math"| IND
+    IND -->|"Validates Quality Gates"| RM
+    RM -.->|"If Veto Triggered"| DROP["Strategic Drop"]:::veto
+    RM -->|"If Setup is Valid"| DB
+    
+    DB -->|"Streams Signals via JSON"| APP
+    APP -->|"Human Validates Trade"| BDMA
+```
+
 - **The Local Sentinel (`worker.py`)**: A backend daemon running locally. It pulls market data, processes math filters, and pushes execution limits to the cloud.
 - **The Vault (Supabase)**: A PostgreSQL cloud database securely holding calculated limits, acting as the bridge between your workstation and mobile device.
 - **The Command Center (`app.py`)**: A Streamlit web application optimized for mobile triage, allowing the operator to execute safely via their broker on the go.
