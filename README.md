@@ -1,6 +1,6 @@
 <div align="center">
   
-# 🛡️ SOVEREIGN NODE
+# SOVEREIGN NODE
 ### Bi-Modal Quantitative Trading & Command Center
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
@@ -15,7 +15,7 @@
 
 ---
 
-## 💼 Executive Summary & Investment Thesis
+## Executive Summary & Investment Thesis
 
 The Sovereign Node is built on institutional principles to scale capital efficiently, avoiding the pitfalls of high-frequency retail black-box APIs that bleed capital to slippage. 
 
@@ -23,19 +23,19 @@ It operates as a highly advanced **Decision Support System (A "Bloomberg Panel")
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 The Sovereign Node employs a strictly decoupled architecture to prevent exchange-side WAF bans and maintain absolute data sovereignty.
 
 ```mermaid
 graph TD;
-    A["Local Sentinel ⚙️"] -->|"Calculates Limits & Signals"| B("The Vault ☁️");
-    B -->|"Pushes Real-Time State"| C["Command Center 📱"];
+    A["Local Sentinel"] -->|"Calculates Limits & Signals"| B("The Vault");
+    B -->|"Pushes Real-Time State"| C["Command Center"];
     A -.->|"Market Feed"| D[("BIST / US Data")];
     C -.->|"Manual Execution"| E(("Broker DMA"));
 ```
 
-### ⚙️ Algorithmic Execution Flow (Script Interactions)
+### Algorithmic Execution Flow (Script Interactions)
 
 This pipeline maps exactly how the core python scripts interact to protect capital. The decoupling ensures the front-end dashboard remains hyper-responsive while the heavy quantitative lifting happens completely asynchronously.
 
@@ -77,15 +77,15 @@ flowchart TD
 
 ---
 
-## 🧠 Quantitative Logic & Quality Gates
+## Quantitative Logic & Quality Gates
 
 The engine actively filters out dangerous market conditions before a trade is ever displayed.
 
-### 📊 Bi-Modal Portfolio Distribution
-- **🛡️ THE TANK (Core 70%)**: High-liquidity "Blue Chip" stocks. Entry triggers on an `SMA(20) - 0.5 * ATR(14)` pullback.
-- **🚀 THE SNIPER (Satellite 30%)**: High-volatility growth stocks. Entry triggers on a deeper `SMA(20) - 1.0 * ATR(14)` pullback.
+### Bi-Modal Portfolio Distribution
+- **THE TANK (Core 70%)**: High-liquidity "Blue Chip" stocks. Entry triggers on an `SMA(20) - 0.5 * ATR(14)` pullback.
+- **THE SNIPER (Satellite 30%)**: High-volatility growth stocks. Entry triggers on a deeper `SMA(20) - 1.0 * ATR(14)` pullback.
 
-### 🛡️ Institutional Quality Gates
+### Institutional Quality Gates
 | Gate | Description |
 | :--- | :--- |
 | **SMA(200) Check** | Stocks trading below their 200-day moving average are automatically rejected to prevent "bottom-fishing". |
@@ -95,7 +95,7 @@ The engine actively filters out dangerous market conditions before a trade is ev
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### 1. Environment Preparation
 Ensure you have Python 3.10+ installed.
