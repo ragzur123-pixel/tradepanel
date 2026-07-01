@@ -9,7 +9,7 @@
 [![Quant](https://img.shields.io/badge/Algorithmic%20Trading-Institutional-black.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-*A professional-grade, zero-latency trading command center tailored for Borsa Istanbul (BIST) and US Markets. Designed to balance Core Wealth Protection with Aggressive Momentum Trading.*
+*An experimental, decentralized systems-engineering project exploring real-time quantitative dashboards and asymmetric data pipelines.*
 
 </div>
 
@@ -26,6 +26,12 @@ It operates on institutional-grade math, dynamic regime filters, and statistical
 ## System Architecture
 
 The Sovereign Node employs a strictly decoupled architecture to prevent exchange-side WAF bans and maintain absolute data sovereignty.
+
+### Tech Stack
+- **Languages**: Python 3.10
+- **Frontend**: Streamlit
+- **Data & Databases**: PostgreSQL (Supabase)
+- **APIs & Integration**: BIST / US Market APIs
 
 ```mermaid
 graph TD;
@@ -129,6 +135,12 @@ streamlit run src/app.py
 
 ---
 
+## About the Developer
+
+This framework was engineered from scratch as a personal systems design challenge. The objective was to learn how to decouple a high-performance backend from a frontend dashboard via a remote database, ensuring strict data sovereignty and fault tolerance.
+
+---
+
 ## Operational Rules (The Sovereign Operator)
 
 1. **Tick Accuracy**: All limits are pre-rounded to valid exchange tick sizes. Use the "COPY PRICE" button.
@@ -139,5 +151,5 @@ streamlit run src/app.py
 
 <div align="center">
  <br>
- <i>Built with precision for Borsa Istanbul and US Markets.</i>
+ <i>Built to demonstrate decoupled systems design and quantitative engineering.</i>
 </div>
